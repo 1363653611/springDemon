@@ -1,5 +1,7 @@
 package com.zbcn.springDemon;
+import java.io.IOException;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.core.io.Resource;
 
@@ -17,5 +19,11 @@ public class ResourceLoader {
 		Resource resource = resourceLoader.getResource("classpath:spring-application.xml");
 		String description = resource.getDescription();
 		System.out.println(description);
+		try {
+			System.out.println(FileUtils.readFileToString(resource.getFile(),"UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

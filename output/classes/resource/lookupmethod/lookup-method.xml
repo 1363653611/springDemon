@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans  
+                        http://www.springframework.org/schema/beans/spring-beans-4.1.xsd  
+                        http://www.springframework.org/schema/context  
+                        http://www.springframework.org/schema/context/spring-context-4.1.xsd">
+  	<!-- 两个bean 供lookup-method 使用 -->
+	<bean id= "apple" class="com.zbcn.springDemon.lookupmethod.Apple" scope="prototype"></bean>
+	<bean id="bananer" class="com.zbcn.springDemon.lookupmethod.Bananer" scope="prototype"></bean>
+	<!-- 获取苹果对象 -->
+	<bean id="fruitPlate1" class="com.zbcn.springDemon.lookupmethod.FruitPlate">
+		<!-- lookup-method 中的bean 必须不是单例模式的，这样可以每次获取新的bean ，否则，则是同一个bean,每次获取到的对象是之前加载过的 -->
+		<lookup-method name="getFruit" bean="apple"/>
+	</bean>
+	
+	<bean id="fruitPlate2" class="com.zbcn.springDemon.lookupmethod.FruitPlate">
+		<lookup-method name="getFruit" bean="bananer"/>
+	</bean>
+
+</beans>
