@@ -35,3 +35,35 @@ BeanDefinitionRegistryPostProcessor：
 	3. 其实，除了以上方式，spring还支持我们通过代码来将指定的类注册到spring容器中，也就是今天我们要实践的主要内容，接下来就从spring源码开始，先学习源码再动手实战；
 
 原文链接：https://blog.csdn.net/boling_cavalry/article/details/82193692
+
+LifecycleProcessor:
+关于容器启动时的Lifecycle的处理:
+以上就是初始化阶段容器对SmartLifecycle实例的处理逻辑，简单的小结如下： 
+1. Lifecycle的处理都是委托给LifecycleProcessor执行的，先准备好此实例； 
+2. 将所有的Lifecycle实例按照phase分组； 
+3. 从phase值最小的分组开始，依次执行其中每个Lifecycle对象的start方法；
+
+以上就是关闭容器阶段对SmartLifecycle实例的处理逻辑，简单的小结如下： 
+1. AbstractApplicationContext的doClose方法在容器关闭时会被执行，此处调用LifecycleProcessor的onClose方法，由LifecycleProcessor负责所有Lifecycle实例的关闭操作； 
+2. 将所有的Lifecycle实例按照phase分组； 
+3. 从phase值最大的分组开始，依次执行其中每个Lifecycle对象的stop方法； 
+4. 对每个SmartLifecycle实例，若想并行执行以加快stop执行速度，可以在stop方法中用新的线程来执行stop业务逻辑，但是最后不要忘记调用Runnable入参的run方法，以完成主线程的计数和统计； 
+5. 主线程使用了CountDownLatch，在调用了SmartLifecycle实例的stop方法后就会等待，等到计数达到SmartLifecycle总数或者等待超时，再继续向后执行；
+
+fecycle和SmartLifecycle，自定义的时候用哪个？
+看了上面的源码分析，我们对Lifecycle和SmartLifecycle有了更全面的认知，如果对执行顺序没有要求，在关闭的时候也没有性能或者时间要求，那么就用Lifecycle吧，因为更简单，如果在乎顺序，也期望关闭时多个Lifecycle实例能并行执行，快速结束，SmartLifecycle无疑更适合；
+
+
+原文链接：https://blog.csdn.net/boling_cavalry/article/details/82051356
+
+
+
+
+
+
+
+
+
+
+
+

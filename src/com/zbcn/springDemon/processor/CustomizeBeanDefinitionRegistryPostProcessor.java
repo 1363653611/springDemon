@@ -8,7 +8,7 @@ import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.beans.factory.support.BeanDefinitionRegistryPostProcessor;
 import org.springframework.beans.factory.support.RootBeanDefinition;
 /**
- * 
+ * 调用栈：AbstractApplicationContext.refresh -> invokeBeanFactoryPostProcessors
  * @ClassName: CustomizeBeanDefinitionRegistryPostProcessor
  * @Description: spring还支持我们通过代码来将指定的类注册到spring容器中
  * @author Administrator

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.zbcn.common.util.StackUtils;
 
 /**
+ * 调用栈：AbstractApplicationContext.refresh ->registerBeanPostProcessors
  * @ClassName: CustomizeBeanPostProcessor：只改变实例化的对象(BeanPostProcessor接口)；
  * @Description: bean 后处理器测试：https://blog.csdn.net/boling_cavalry/article/details/82250986
  * @author Administrator
