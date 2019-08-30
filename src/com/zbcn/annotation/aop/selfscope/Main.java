@@ -17,7 +17,7 @@ public class Main {
 
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		
-		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+		ApplicationContext context = new AnnotationConfigApplicationContext(AopAppConfig.class);
 		//testSameThread(context);
 		testAsync(context);
 		

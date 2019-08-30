@@ -10,14 +10,14 @@ import org.springframework.context.annotation.Configuration;
 
 /**
  * 
- * @ClassName: AppConfig
+ * @ClassName: AopAppConfig
  * @Description: 注册scope
  * @author Administrator
  * @date 2019-08-21 17:05
  */
 @Configuration
 @ComponentScan
-public class AppConfig {
+public class AopAppConfig {
 	
 	@Bean
 	public static CustomScopeConfigurer customScopeConfigurer() {
