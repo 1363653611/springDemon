@@ -26,3 +26,12 @@ BeanFactoryPostProcessor:
 5. 此时的spring容器还没有开始实例化bean，因此自定义的BeanFactoryPostProcessor实现类不要做与bean实例有关的操作，而是做一些与bean定义有关的操作，例如修改某些字段的值，这样后面实例化的bean的就会有相应的改变；
 
 原文链接:https://blog.csdn.net/boling_cavalry/article/details/82083889
+
+BeanDefinitionRegistryPostProcessor：
+
+	我们开发的类，如果想注册到spring容器，让spring来完成实例化，常用方式如下： 
+	1. xml中通过bean节点来配置； 
+	2. 使用@Service、@Controller、@Conponent等注解； 
+	3. 其实，除了以上方式，spring还支持我们通过代码来将指定的类注册到spring容器中，也就是今天我们要实践的主要内容，接下来就从spring源码开始，先学习源码再动手实战；
+
+原文链接：https://blog.csdn.net/boling_cavalry/article/details/82193692
