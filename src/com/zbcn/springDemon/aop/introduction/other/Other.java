@@ -23,6 +23,9 @@ public class Other implements IOther, IntroductionInterceptor{
 		
 	}
 
+	/**
+	 * 判断调用的方法是否为指定类中的方法
+	 */
 	@Override
 	public boolean implementsInterface(Class<?> intf) {
 		// TODO Auto-generated method stub

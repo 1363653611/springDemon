@@ -5,7 +5,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Main {
 
 	/**
-	 * Bean在实例化的过程中：Constructor > @PostConstruct >InitializingBean > init-method
+	 * Bean在实例化的过程中：Coumnstructor > @PostConstruct >InitializingBean > init-method
 	 * Bean在销毁的过程中：@PreDestroy > DisposableBean > destroy-method
 	 * @Title: main
 	 * @Description: TODO
