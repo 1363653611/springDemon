@@ -21,7 +21,7 @@ public class Main {
 		context.refresh();
 		ProcessDemon bean = context.getBean(ProcessDemon.class);
 		BeanFactoryProcessDemon bean2 = context.getBean(BeanFactoryProcessDemon.class);
-		System.out.println(JSON.toJSONString(bean2));
+		System.out.println("测试:"+ JSON.toJSONString(bean2));
 		context.stop();
 	}
 	

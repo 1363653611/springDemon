@@ -119,9 +119,6 @@
 	    <artifactId>commons-beanutils</artifactId>
 	    <version>1.9.4</version>
 	</dependency>
-	
-	
-	
 
   </dependencies>
   <!-- 项目构建路径 -->
@@ -129,7 +126,21 @@
     <sourceDirectory>src</sourceDirectory>  
     <testSourceDirectory>test</testSourceDirectory>
     <outputDirectory>output/classes</outputDirectory>  
-    <testOutputDirectory>output/test-classes</testOutputDirectory>  
-    <directory>target/jar</directory>  
+    <testOutputDirectory>output/test-classes</testOutputDirectory>
+	  <resources> <!--资源文件夹，可配置多个-->
+		  <resource>
+			  <filtering>true</filtering>
+			  <directory>src</directory><!--资源文件目录-->
+			  <includes> <!--包含的文件-->
+				  <include>**/*.*</include>
+			  </includes>
+		  </resource>
+	  </resources>
+	  <testResources>
+	  <testResource>
+		  <directory>test/resources</directory><!--测试资源目录-->
+	  </testResource>
+	  </testResources>
+    <directory>target/jar</directory>
   </build>
 </project>

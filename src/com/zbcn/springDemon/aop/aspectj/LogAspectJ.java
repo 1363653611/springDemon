@@ -28,7 +28,7 @@ public class LogAspectJ {
 	
 	/**
 	 * @Title: around
-	 * @Description: 切入点要执行的
+	 * @Description: 切入点要执行的逻辑
 	 * @param point
 	 */
 	@Around("pointCut()")

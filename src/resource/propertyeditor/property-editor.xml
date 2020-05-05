@@ -20,14 +20,13 @@
 		
 		</property>
 		
-		<!-- customEditors -->
+		<!-- 方式2:customEditors -->
 		<property name="customEditors">
 			<map>
 				 <!--②-1属性编辑器对应的属性类型-->  
                 <entry key="com.zbcn.springDemon.propertyeditor.bean.Car" value="com.zbcn.springDemon.propertyeditor.CustomCarEditor">  
                  	<!--②-2对应的属性编辑器Bean： 说明旧版本中的写法，改写法新版本不支持，会报错 :https://www.cnblogs.com/Henvealf/articles/5269264.html -->  
                  <!-- 	<bean class="com.zbcn.springDemon.propertyeditor.CustomCarEditor"/>  -->
-               
                 </entry>
 			</map>
 		</property>
@@ -43,12 +42,12 @@
            <property name="car" value="红旗CA72,200,20000.00"/>   
     </bean>
     
-    
+    <!-- 注册日期类型转换器-->
     <bean id="dateEditor" class="com.zbcn.springDemon.propertyeditor.DatePropertyEditor">
     	<property name="dataPattern" value="yyyy-MM-dd"/>
     </bean>
     
-    
+    <!--String 转换为 date 类型-->
     <bean id="entity" class="com.zbcn.springDemon.propertyeditor.bean.Entity">
       <property name="date" value="2007-10-16" />
     </bean>

@@ -4,6 +4,9 @@ import java.beans.PropertyEditorSupport;
 
 import com.zbcn.springDemon.propertyeditor.bean.Car;
 
+/**
+ * Car 类型转换器
+ */
 public class CustomCarEditor extends PropertyEditorSupport {
 	
 	//1. 将字面值转换为属性类型对象
