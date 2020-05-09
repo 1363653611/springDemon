@@ -1,4 +1,7 @@
-/output/
 /target/
 /.classpath
 /.project
+/.idea/
+/spring-base/output/
+/spring-batch/target/
+/spring-jdbc/target/

@@ -1,0 +1,60 @@
+<beans:beans xmlns="http://www.springframework.org/schema/batch"
+	xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-2.0.xsd
+	http://www.springframework.org/schema/batch
+	http://www.springframework.org/schema/batch/spring-batch-3.0.xsd">
+	<job id="messageJob" restartable="true">
+		<step id="messageStep">
+			<tasklet>
+				<!-- 'commit-interval=5' 指定了该 Step 中事务提交的粒度，取值为 5 即表明每当处理完毕读入的 5 条数据时，提交一次事务 -->
+				<!-- chunk-completion-policy 指定了 Step 的完成策略，即当什么情况发生时表明该 Step 已经完成，可以转入后续处理。由于没有明确指定相应的类，Spring Batch 使用默认策略，即当读入数据为空时认为 Step 结束 -->
+				<chunk reader="messageReader" processor="messageProcessor" writer="messageWriter"
+					commit-interval="5" chunk-completion-policy="" retry-limit="2">
+					<retryable-exception-classes>
+						<include class="java.lang.RuntimeException" />
+					</retryable-exception-classes>
+				</chunk>
+			</tasklet>
+		</step>
+	</job>
+
+	<!-- 事务管理器，该类用于对 Job 进行管理 -->
+	<beans:bean id="jobRepository"
+		class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+		<beans:property name="transactionManager" ref="transactionManager" />
+	</beans:bean>
+
+	<beans:bean id="transactionManager"
+		class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+	<!-- 读写及处理接口 -->
+	<beans:bean id="messageReader"
+		class="org.springframework.batch.item.file.FlatFileItemReader">
+		<beans:property name="lineMapper" ref="lineMapper">
+		</beans:property>
+		<beans:property name="resource" value="classpath:batch/users.txt"></beans:property>
+	</beans:bean>
+
+	<!-- LineMapper 可以将文件中的一行映射为一个对象 -->
+	<beans:bean id="lineMapper"
+		class="org.springframework.batch.item.file.mapping.DefaultLineMapper">
+		<beans:property name="lineTokenizer">
+			<!-- 首先通过 lineTokenizer 完成文件行拆分，并封装为一个属性结果集，因为我们使用“,”分隔用户属性，所以需要将 lineTokenizer 设置为 DelimitedLineTokenizer -->
+			<beans:bean
+				class="org.springframework.batch.item.file.transform.DelimitedLineTokenizer"></beans:bean>
+		</beans:property>
+		<beans:property name="fieldSetMapper">
+			<beans:bean class="com.zbcn.batch.mapper.UserMapper"></beans:bean>
+		</beans:property>
+	</beans:bean>
+
+	<beans:bean id="messageProcessor"
+		class="com.zbcn.batch.function.MessagesItemProcessor"></beans:bean>
+
+	<!-- 任务操作 -->
+	<beans:bean id="messageWriter"
+		class="com.zbcn.batch.writer.MessagesItemWriter"></beans:bean>
+
+</beans:beans>
