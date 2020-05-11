@@ -11,6 +11,7 @@
         <module>spring-jdbc</module>
         <module>spring-base</module>
         <module>spring-batch</module>
+        <module>springMVC</module>
     </modules>
 
 </project>

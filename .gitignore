@@ -5,3 +5,6 @@
 /spring-base/output/
 /spring-batch/target/
 /spring-jdbc/target/
+/springMVC/com.zbcn.common/target/
+/springMVC/com.zbcn.web/target/
+/springDemon.iml
