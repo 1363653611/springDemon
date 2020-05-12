@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+    <context:component-scan base-package="com.zbcn"/>
+    <!--加载外部的properties文件-->
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="jdbcUrl" value="${jdbcUrl}"/>
+        <property name="driverClass" value="${driverClass}"/>
+        <property name="user" value="${user}"/>
+        <property name="password" value="${password}"/>
+        <!--初始化时获取三个连接，取值应在minPoolSize与maxPoolSize之间。Default: 3 -->
+        <property name="initialPoolSize" value="${initialPoolSize}"/>
+        <!--连接池中保留的最小连接数。Default: 3 -->
+        <property name="minPoolSize" value="${minPoolSize}"/>
+        <!--连接池中保留的最大连接数。Default: 15 -->
+        <property name="maxPoolSize" value="${maxPoolSize}"/>
+        <!--当连接池中的连接耗尽的时候c3p0一次同时获取的连接数。Default: 3 -->
+        <property name="acquireIncrement" value="${acquireIncrement}"/>
+        <!-- 控制数据源内加载的PreparedStatements数量。如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭。Default: 0 -->
+        <property name="maxStatements" value="${maxStatements}"/>
+        <!-- maxStatementsPerConnection定义了连接池内单个连接所拥有的最大缓存statements数。Default: 0 -->
+        <property name="maxStatementsPerConnection" value="${maxStatementsPerConnection}"/>
+        <!--最大空闲时间,1800秒内未使用则连接被丢弃。若为0则永不丢弃。Default: 0 -->
+        <property name="maxIdleTime" value="${maxIdleTime}"/>
+    </bean>
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configuration">
+            <bean id="configuration" class="org.apache.ibatis.session.Configuration">
+                <property name="mapUnderscoreToCamelCase" value="true"/>
+                <!-- 打开全局缓存开关（二级缓存）默认值就是 true -->
+                <property name="cacheEnabled" value="true"/>
+            </bean>
+        </property>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations" value="classpath*:mappers/**/*.xml" />
+        <property name="databaseIdProvider" ref="databaseIdProvider"/>
+    </bean>
+    <!--扫描包路径-->
+    <mybatis:scan base-package="com.zbcn.mapper"/>
+    <!--与 mybatis:scan  作用一致-->
+    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.zbcn.mapper" />
+    </bean>-->
+
+    <!--SqlSessionTemplate 是 MyBatis-Spring 的核心-->
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory" />
+        <!--接收 ExecutorType 参数的构造方法。这允许批量创建对象-->
+        <constructor-arg index="1" value="BATCH" />
+    </bean>
+
+    <!---多数据源-->
+    <bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+        <property name="properties">
+            <props>
+                <prop key="SQL Server">sqlserver</prop>
+                <prop key="DB2">db2</prop>
+                <prop key="Oracle">oracle</prop>
+                <prop key="MySQL">mysql</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!--事物管理类-->
+    <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!-- 基于注解的事务管理 -->
+    <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
+<!--    <tx:jta-transaction-manager/>-->
+
+
+
+</beans>
