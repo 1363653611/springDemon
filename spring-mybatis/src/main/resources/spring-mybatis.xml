@@ -49,6 +49,7 @@
     <!--与 mybatis:scan  作用一致-->
     <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.zbcn.mapper" />
+        <property name="processPropertyPlaceHolders" value="true"/>
     </bean>-->
 
     <!--SqlSessionTemplate 是 MyBatis-Spring 的核心-->
@@ -74,7 +75,7 @@
     <bean id="dataSourceTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
     </bean>
-    <!-- 基于注解的事务管理 -->
+    <!-- 基于注解的事务管理:事务开启的入口 -->
     <tx:annotation-driven transaction-manager="dataSourceTransactionManager"/>
 <!--    <tx:jta-transaction-manager/>-->
 
