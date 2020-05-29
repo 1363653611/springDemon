@@ -44,6 +44,12 @@
             <!-- 定义在 mvc:interceptor 下面的 Interceptor，表示对特定的请求进行拦截 -->
             <bean class="com.zbcn.web.pub.intercepter.ResponseResultInterceptor"/>
         </mvc:interceptor>
+        <!--权限校验拦截-->
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <!-- 定义在 mvc:interceptor 下面的 Interceptor，表示对特定的请求进行拦截 -->
+            <bean class="com.zbcn.web.pub.intercepter.LoginInterceptor"/>
+        </mvc:interceptor>
         <!--跨域兼容问题拦截器-->
         <mvc:interceptor>
             <mvc:mapping path="/cors/**"/>
