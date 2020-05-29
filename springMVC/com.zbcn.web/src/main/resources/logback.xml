@@ -34,7 +34,7 @@
     <!-- 在Eclipse中运行，请到Eclipse的安装目录中找log文件，Tomcat下，请到Tomcat目录下找 -->
     <property name="LOG_PATH" value="${catalina.base}/logs"/>
     <!-- 项目名称 -->
-    <property name="PROJECT_NAME" value="spring-mvc"/>
+    <property name="PROJECT_NAME" value="springMVC"/>
 
 
     <!-- 控制台打印日志的配置 -->

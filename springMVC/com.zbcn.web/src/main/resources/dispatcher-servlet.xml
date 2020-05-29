@@ -32,8 +32,7 @@
         <property name="exposeContextBeansAsAttributes" value="true"/>
     </bean>
     <!-- 自动扫描装配 -->
-    <context:component-scan base-package="com.zbcn.web">
-    </context:component-scan>
+    <context:component-scan base-package="com.zbcn.web"/>
 
     <!--拦截器-->
     <mvc:interceptors>
@@ -51,14 +50,20 @@
             <bean class="com.zbcn.web.pub.intercepter.AllowCrossDomainInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
-    <context:property-placeholder location="classpath:config.properties"/>
+
+    <!--
+    spring扫描注册PropertyPlaceholderConfigurer的bean被设置为单例模式，spring只会扫描一个PropertyPlaceholderConfigurer或者<context:property-placeholder>配置，
+    其它多余将被忽略，所以可能会出现替代属性值的占位符无法解析
+    https://blog.csdn.net/zhangjianming2018/article/details/86649025
+    -->
+    <context:property-placeholder location="classpath:config.properties" ignore-unresolvable="true"/>
     <!--多环境配置-->
     <beans profile="dev">
         <!-- 只扫描开发环境下使用的类 -->
        <!-- <context:component-scan base-package="com.zbcn.web.env.dev" />-->
         <!-- 加载开发使用的配置文件 -->
         <!--<util:properties id="config" location="classpath:dev/config.properties"/>-->
-        <context:property-placeholder location="classpath:dev/config.properties"/>
+        <context:property-placeholder location="classpath:dev/config.properties" ignore-unresolvable="true"/>
     </beans>
     <beans profile="prod">
         <!-- 只扫描生产环境下使用的类 -->
@@ -66,7 +71,7 @@
                 base-package="com.zbcn.web.env.prod" />-->
         <!-- 加载生产使用的配置文件 -->
         <!--<util:properties id="config" location="classpath:prod/config.properties"/>-->
-        <context:property-placeholder location="classpath:prod/config.properties"/>
+        <context:property-placeholder location="classpath:prod/config.properties" ignore-unresolvable="true"/>
     </beans>
 
 </beans>

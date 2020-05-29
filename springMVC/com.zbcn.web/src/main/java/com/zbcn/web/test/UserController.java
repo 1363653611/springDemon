@@ -23,8 +23,8 @@ import java.util.Date;
  * ResponseResultInterceptor 拦截器（主要用于将ResponseResult注解类的标记信息传入ResponseResultHandler中）
  * ResponseResultHandler 响应体格式处理器（主要转换逻辑都在这里）
  */
+@ResponseResult
 @RestController
-@ResponseResult(PlatformResult.class)
 @RequestMapping("/users")
 public class UserController {
 
