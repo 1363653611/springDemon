@@ -1,6 +1,5 @@
 package com.zbcn.web.pub.intercepter;
 
-import com.zbcn.common.constants.HeaderConstants;
 import com.zbcn.common.enums.ResultCode;
 import com.zbcn.common.exceptions.BusinessException;
 import com.zbcn.web.entity.dto.User;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
-import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

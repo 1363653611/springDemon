@@ -5,6 +5,8 @@ import com.zbcn.common.exceptions.BusinessException;
 import com.zbcn.common.response.PlatformResult;
 import com.zbcn.web.entity.dto.User;
 import com.zbcn.web.pub.annotations.ResponseResult;
+import com.zbcn.web.validate.group.First;
+import com.zbcn.web.validate.group.Second;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
@@ -35,7 +37,7 @@ public class UserController {
      */
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User addUser(@Validated @RequestBody User user) {
+    public User addUser(@Validated({First.class, Second.class}) @RequestBody User user) {
         //user.setId(10000L);
         user.setCreateTime(new Date());
         if(StringUtils.equals(String.valueOf(user.getId()),"11")){
