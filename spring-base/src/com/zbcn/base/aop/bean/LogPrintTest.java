@@ -1,8 +1,10 @@
 package com.zbcn.base.aop.bean;
 
+import com.zbcn.base.aop.annotation.ExceptionLog;
+import com.zbcn.base.aop.annotation.Log;
 import org.springframework.stereotype.Component;
 
-import com.zbcn.base.aop.annotation.Log;
+import java.util.Map;
 
 @Component
 public class LogPrintTest {
@@ -17,5 +19,11 @@ public class LogPrintTest {
 	public int doOther(int i) {
 		System.out.println("测试other数据");
 		return i;
+	}
+
+	@ExceptionLog(moduleName = "数据转换", value = "异常信息测试")
+	public void throwException(int i,String test, Map<String, Object> obj){
+
+		throw new RuntimeException("运行时异常：");
 	}
 }

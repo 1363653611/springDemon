@@ -1,7 +1,11 @@
 package com.zbcn.base.aop;
 
+import java.util.HashMap;
 import java.util.Map;
 
+import com.zbcn.base.aop.bean.ILogTest;
+import com.zbcn.base.aop.bean.LogTestImpl;
+import org.slf4j.ILoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.core.env.StandardEnvironment;
@@ -18,7 +22,15 @@ public class Main {
 		
 		bean.doSomething("打印测试呀");
 		bean.doOther(123);
-		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("key", "123");
+		map.put("value", "zhizhi");
+//		bean.throwException(2, "aaaaaa", map);
+		ILogTest logTestImpl = (ILogTest)context.getBean("logTestImpl");
+		logTestImpl.doLog();
+		//说明：aop 代理，如果需要代理的类实现了接口，则使用的是 JDK 动态代理，创建的代理对象是基于 接口的，
+		// 所以未实现接口的方法不会被增强
+		//logTestImpl.doLog2();
 		testEnvironment();
 	}
 	
