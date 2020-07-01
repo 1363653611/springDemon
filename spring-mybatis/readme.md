@@ -48,6 +48,17 @@
     <property name="mapperLocations" value="classpath*:mappers/**/*.xml" />
     <property name="databaseIdProvider" ref="databaseIdProvider"/>
 </bean>
+<!---多数据源-->
+<bean id="databaseIdProvider" class="org.apache.ibatis.mapping.VendorDatabaseIdProvider">
+    <property name="properties">
+        <props>
+            <prop key="SQL Server">sqlserver</prop>
+            <prop key="DB2">db2</prop>
+            <prop key="Oracle">oracle</prop>
+            <prop key="MySQL">mysql</prop>
+        </props>
+    </property>
+</bean>
 ```
 ### spring 中使用Mybatis
 #### 通过 org.mybatis.Spring.SqlSessionFactoryBean引入了 Mybatis 的配置和数据源
