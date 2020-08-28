@@ -18,4 +18,10 @@ public class UserTestServiceImpl implements IUserTestService {
     public List<UserTest> list() {
         return userTestMapper.list();
     }
+
+
+    public static void main(String[] args) {
+        String property = System.getProperty("line.separator");
+        System.out.println(property);
+    }
 }

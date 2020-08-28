@@ -1,4 +1,4 @@
-package com.zbcn.web.test;
+package com.zbcn.web.controller;
 
 import com.zbcn.common.enums.ResultCode;
 import com.zbcn.common.exceptions.BusinessException;

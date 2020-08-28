@@ -1,4 +1,4 @@
-package com.zbcn.web.test;
+package com.zbcn.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;

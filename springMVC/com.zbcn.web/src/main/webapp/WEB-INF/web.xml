@@ -83,4 +83,8 @@
         <listener-class>ch.qos.logback.ext.spring.web.LogbackConfigListener</listener-class>
     </listener>
 
+    <!--自定义contextListener-->
+    <listener>
+        <listener-class>com.zbcn.web.listener.MyDataContextListener</listener-class>
+    </listener>
 </web-app>

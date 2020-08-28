@@ -71,6 +71,9 @@
     <!--参数校验-->
     <import resource="spring-validator.xml"/>
 
+    <!--自定义 controller-->
+    <bean id="/helloLastModified" class="com.zbcn.web.controller.HelloWordLastModifiedCachedController"/>
+
     <!--多环境配置-->
     <beans profile="dev">
         <!-- 只扫描开发环境下使用的类 -->
