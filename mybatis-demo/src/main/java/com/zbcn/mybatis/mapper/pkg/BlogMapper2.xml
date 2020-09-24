@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zbcn.mybatis.mapper.pkg.BlogMapper2">
+
+    <select id="getAllBlogs" resultType="com.zbcn.mybatis.vo.Blog">
+        select * from blog;
+    </select>
+    <select id="selectOne" resultType="com.zbcn.mybatis.vo.Blog">
+        select * from blog where id = #{id,jdbcType=VARCHAR}
+    </select>
+    <delete id="insert" parameterType="com.zbcn.mybatis.vo.Blog">
+         insert into blog set
+        NAME = #{name,jdbcType=VARCHAR},
+        TITLE =#{title,jdbcType=VARCHAR},
+        CONTENT=#{content,jdbcType=VARCHAR},
+        AUTHOR_ID=#{authorId,jdbcType=BIGINT},
+        CREATE_TIME=#{createTime,jdbcType=TIMESTAMP},
+        UPDATE_TIME=#{updateTime,jdbcType=TIMESTAMP}
+    </delete>
+
+</mapper>

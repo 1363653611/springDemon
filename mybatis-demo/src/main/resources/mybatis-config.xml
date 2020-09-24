@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!-- 引入外部mysql配置文件 -->
+    <properties resource="sql.properties"></properties>
+    <!-- 配置mybatis的log实现为log4j -->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
+    <typeAliases>
+        <!-- 别名方式，自动扫描，将JAVA类的类名作为类的类别名 -->
+        <package name="com.zbcn.pojo."/>
+    </typeAliases>
+    <typeHandlers>
+        <!--自定义类型处理-->
+        <typeHandler handler="com.zbcn.mybatis.handle.CustomStringTypeHandler"/>
+    </typeHandlers>
+    <!--setProperties 方法可以被用来配置 ObjectFactory，在初始化你的 ObjectFactory 实例后，
+    objectFactory 元素体中定义的属性会被传递给 setProperties 方法。-->
+    <objectFactory type="com.zbcn.mybatis.factory.CustomObjectFactory">
+        <property name="glob" value="执笔成念"/>
+    </objectFactory>
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+
+            <!-- mybatis提供了3种数据源类型，分别是：POOLED,UNPOOLED,JNDI -->
+            <!-- POOLED 表示支持JDBC数据源连接池 -->
+            <!-- UNPOOLED 表示不支持数据源连接池 -->
+            <!-- JNDI 表示支持外部数据源连接池 -->
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--编写 sql 语句的mapper xml-->
+        <mapper resource="mapper/BlogMapper.xml"/>
+        <!--编写 sql 语句的mapper class-->
+        <mapper class="com.zbcn.mybatis.mapper.anno.BlogMapperAnno"/>
+    </mappers>
+</configuration>

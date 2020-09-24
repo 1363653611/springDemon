@@ -13,6 +13,7 @@
         <module>spring-batch</module>
         <module>springMVC</module>
         <module>spring-mybatis</module>
+        <module>mybatis-demo</module>
     </modules>
 
 </project>

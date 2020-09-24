@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zbcn.mybatis.mapper.xml.BlogAuthorMapper">
+    <cache/><!--开启二级缓存-->
+    <resultMap id="ResultMap" type="blogAuthor">
+        <id column="ID" jdbcType="BIGINT" property="id" javaType="int" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" javaType="string"/>
+        <result column="GENDER" jdbcType="CHAR" property="gender" javaType="string"/>
+        <result column="AGE" jdbcType="INTEGER" property="age" javaType="int"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" javaType="date"/>
+    </resultMap>
+
+    <!--连表查询时,主子表 的id 字段不能一致,否则会造成数据混乱-->
+    <resultMap id="ResultMap2" type="com.zbcn.mybatis.vo.AuthorWithBlog">
+        <id column="AUTHOR_ID" jdbcType="BIGINT" property="id" javaType="long" />
+        <result column="NAME" jdbcType="VARCHAR" property="name" javaType="string"/>
+        <result column="GENDER" jdbcType="CHAR" property="gender" javaType="string"/>
+        <result column="AGE" jdbcType="INTEGER" property="age" javaType="int"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" javaType="date"/>
+        <collection property="blogs" ofType="com.zbcn.mybatis.vo.Blog"  resultMap="com.zbcn.mybatis.mapper.xml.BlogMapper.ResultMap"/>
+    </resultMap>
+    <sql id="baseColumn">
+        ID,NAME,GENDER,AGE,CREATE_TIME
+    </sql>
+    <select id="getBlogAuthorById" resultType="com.zbcn.mybatis.vo.BlogAuthor">
+        select
+        <include refid="baseColumn"/>
+        from blog_author
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="getAuthorWithBlog" parameterType="long" resultMap="ResultMap2">
+        select
+        a.ID as AUTHOR_ID,a.NAME,a.GENDER,a.AGE,a.CREATE_TIME,
+        b.ID,b.NAME, b.TITLE, b.CONTENT,b.AUTHOR_ID,b.CREATE_TIME,b.UPDATE_TIME
+        from blog_author a
+        left JOIN
+        blog b
+        on  a.ID = b.AUTHOR_ID
+        WHERE a.ID=#{id,jdbcType=BIGINT}
+    </select>
+    
+    
+    <insert id="insert" parameterType="com.zbcn.mybatis.vo.BlogAuthor">
+        insert into blog_author
+        (NAME,GENDER,AGE,CREATE_TIME)
+        value (#{name,jdbcType=VARCHAR},#{gender,jdbcType=CHAR},#{age,jdbcType=INTEGER},#{createTime,jdbcType=TIMESTAMP})
+    </insert>
+    <update id="updateById" parameterType="com.zbcn.mybatis.vo.BlogAuthor">
+        update blog_author
+        <set>
+            <if test="name != null and name != ''">
+                NAME = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="age != null">
+                AGE = #{age,jdbcType=INTEGER}
+            </if>
+            <if test="gender != null and gender != ''">
+                GENDER = #{gender,jdbcType=VARCHAR}
+            </if>
+            <if test="createTime != null">
+                CREATE_TIME = #{createTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        WHERE ID = #{id,jdbcType=BIGINT}
+    </update>
+
+
+</mapper>

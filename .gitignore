@@ -12,3 +12,5 @@
 /spring-mybatis/target/
 /catalina.base_IS_UNDEFINED/logs/springMVC/
 /out/artifacts/com_zbcn_web_war_exploded/META-INF/
+/mybatis-demo/mybatis-demo.iml
+/mybatis-demo/target/
